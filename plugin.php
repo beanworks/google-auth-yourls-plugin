@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Google Authentication
-Plugin URI: https://github.com/8thwall/google-auth-yourls
-Description: This plugin enables authentation against Google
+Plugin Name: Google Authentication YOURLS Plugin
+Plugin URI: https://github.com/beanworks/google-auth-yourls-plugin
+Description: This plugin enables authentation against Google. Based on the plugin by 8thwall.
 Version: 1.0
-Author: Tony Tomarchio (atomarch)
-Author URI: http://www.8thwall.com, http://www.tomarchio.cc
+Author: Beanworks
+Author URI: http://github.com/beanworks
 */
 
 // No direct call
@@ -83,12 +83,7 @@ function atomarch_google_auth() {
 }
 
 function atomarch_check_domain($google_client) {
-
-    // List of domains that have permission to login. Use "*"" to allow access from any google account
-    //$APPROVED_DOMAINS = array("domain1.com", "domain2.com");
-    $APPROVED_DOMAINS = array("*");
-
-    if (in_array("*", $APPROVED_DOMAINS)) {
+    if (in_array("*", APPROVED_DOMAIN)) {
         return true;
     }
 
@@ -98,10 +93,28 @@ function atomarch_check_domain($google_client) {
         $user_info = $google_oauthV2->userinfo->get();
         $user_domain = substr(strrchr($user_info['email'], "@"), 1);
 
-        if (in_array($user_domain, $APPROVED_DOMAINS)) {
+        if (in_array($user_domain, APPROVED_DOMAIN)) {
             return true;
         } else {
             return false;
         }
     }
+}
+
+/*
+ * Register the plugin admin page
+ */
+yourls_add_action( 'plugins_loaded', 'google_auth_init' );
+function google_auth_init() {
+    yourls_register_plugin_page( 'google_auth', 'Google Auth Settings', 'google_auth_display_page' );
+}
+
+/*
+ * Draw the plugin admin page
+ */
+function google_auth_display_page() {
+    ?>
+    <h3><?php yourls_e( 'Google Auth Settings' ); ?></h3>
+        <p><?php yourls_se( "Approved Google domains: %s", APPROVED_DOMAIN ); ?></p>
+    <?php
 }
