@@ -1,4 +1,4 @@
-# google-auth-yourls
+# google-auth-yourls-plugin
 Enables Google Authentication for YOURLS 
 
 Proper documentation coming soon.
