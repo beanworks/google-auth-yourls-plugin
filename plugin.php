@@ -18,7 +18,7 @@ if (!defined('YOURLS_ABSPATH')) {
  * See https://github.com/google/google-api-php-client for install instructions.
  * Include your composer dependencies:
  */
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../../../includes/vendor/autoload.php';
 
 /* The function yourls_is_valid_user() in includes/functions-auth.php checks for a valid user via the login
  * form or stored cookie. The 'shunt_is_valid_user' filter allows plugins such as this one, to short-circuit
