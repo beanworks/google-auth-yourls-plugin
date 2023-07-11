@@ -83,7 +83,7 @@ function atomarch_google_auth() {
 }
 
 function atomarch_check_domain($google_client) {
-    if (in_array("*", APPROVED_DOMAIN)) {
+    if (APPROVED_DOMAIN == "*") {
         return true;
     }
 
@@ -93,7 +93,7 @@ function atomarch_check_domain($google_client) {
         $user_info = $google_oauthV2->userinfo->get();
         $user_domain = substr(strrchr($user_info['email'], "@"), 1);
 
-        if (in_array($user_domain, APPROVED_DOMAIN)) {
+        if (APPROVED_DOMAIN == $user_domain) {
             return true;
         } else {
             return false;
